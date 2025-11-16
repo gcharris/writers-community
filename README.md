@@ -35,41 +35,179 @@ Writers Community Platform empowers writers to upload, share, and receive feedba
 - TanStack Query
 - Zustand (state)
 
+## Sprint 1 Status: ✅ COMPLETE
+
+Sprint 1 implements the foundation:
+- ✅ User authentication (register/login with JWT)
+- ✅ Work upload functionality
+- ✅ Work display/reading interface
+- ✅ PostgreSQL database setup
+- ✅ Docker Compose for local development
+
+## Getting Started
+
+### Prerequisites
+
+- Python 3.11+
+- Node.js 18+
+- Docker & Docker Compose
+- Git
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/gcharris/writers-community.git
+cd writers-community
+```
+
+### 2. Start the Database
+
+```bash
+docker-compose up -d
+```
+
+This starts PostgreSQL on port 5432.
+
+### 3. Backend Setup
+
+```bash
+cd backend
+
+# Create virtual environment
+python -m venv venv
+
+# Activate virtual environment
+# On macOS/Linux:
+source venv/bin/activate
+# On Windows:
+venv\Scripts\activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Create .env file
+cp .env.example .env
+
+# Generate a secret key and update .env
+# You can use: openssl rand -hex 32
+# Or: python -c "import secrets; print(secrets.token_hex(32))"
+```
+
+Edit `.env` file:
+```
+DATABASE_URL=postgresql://postgres:postgres@localhost:5432/writers_community
+SECRET_KEY=your-generated-secret-key-here
+```
+
+Start the backend:
+```bash
+uvicorn app.main:app --reload
+```
+
+Backend will run on **http://localhost:8000**
+
+API Documentation: **http://localhost:8000/api/docs**
+
+### 4. Frontend Setup
+
+Open a new terminal:
+
+```bash
+cd frontend
+
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+```
+
+Frontend will run on **http://localhost:5173**
+
+## Usage
+
+### Test the Complete Flow
+
+1. Open **http://localhost:5173** in your browser
+2. Click "Register" and create a new account
+3. Log in with your credentials
+4. Click "Upload Work" and submit a piece of writing
+5. View your uploaded work
+6. Browse all published works on the home page
+
+### API Testing
+
+You can also test the API directly:
+
+**Register:**
+```bash
+curl -X POST http://localhost:8000/api/auth/register \
+  -H "Content-Type: application/json" \
+  -d '{"username":"testuser","email":"test@example.com","password":"password123"}'
+```
+
+**Login:**
+```bash
+curl -X POST http://localhost:8000/api/auth/login \
+  -H "Content-Type: application/x-www-form-urlencoded" \
+  -d "username=test@example.com&password=password123"
+```
+
+**Upload Work (with token):**
+```bash
+curl -X POST http://localhost:8000/api/works/ \
+  -H "Authorization: Bearer YOUR_TOKEN_HERE" \
+  -H "Content-Type: application/json" \
+  -d '{"title":"My First Story","genre":"Fiction","content":"Once upon a time..."}'
+```
+
+## Project Structure
+
+```
+writers-community/
+├── backend/
+│   ├── app/
+│   │   ├── core/           # Configuration, database, security
+│   │   ├── models/         # SQLAlchemy models
+│   │   ├── routes/         # API endpoints
+│   │   ├── schemas/        # Pydantic schemas
+│   │   └── main.py         # FastAPI application
+│   ├── requirements.txt
+│   ├── .env.example
+│   └── .env
+├── frontend/
+│   ├── src/
+│   │   ├── api/            # API client
+│   │   ├── stores/         # Zustand state management
+│   │   ├── pages/          # React pages
+│   │   ├── App.tsx         # Main app component
+│   │   └── main.tsx        # Entry point
+│   ├── package.json
+│   └── vite.config.ts
+├── docs/                   # Complete documentation
+├── docker-compose.yml      # PostgreSQL setup
+└── README.md
+```
+
 ## Documentation
 
 All project documentation is in the `/docs` directory:
 
-**Architecture:**
 - **[WRITERS_COMMUNITY_ARCHITECTURE.md](docs/WRITERS_COMMUNITY_ARCHITECTURE.md)** - Complete platform vision and architecture
-
-**Sprint 1: Foundation**
-- **[SPRINT_1_COMMUNITY_FOUNDATION.md](docs/SPRINT_1_COMMUNITY_FOUNDATION.md)** - Detailed specification with all code
+- **[SPRINT_1_COMMUNITY_FOUNDATION.md](docs/SPRINT_1_COMMUNITY_FOUNDATION.md)** - Detailed Sprint 1 specification with all code
 - **[PROMPT_COMMUNITY_SPRINT_1.md](docs/PROMPT_COMMUNITY_SPRINT_1.md)** - Step-by-step implementation guide
 - **[PROMPT_COMMUNITY_SPRINT_1_FINAL.md](docs/PROMPT_COMMUNITY_SPRINT_1_FINAL.md)** - Concise implementation prompt
 
-**Sprint 2: Read-to-Rate**
-- **[SPRINT_2_READ_TO_RATE.md](docs/SPRINT_2_READ_TO_RATE.md)** - Complete read-to-rate mechanics specification
-- **[PROMPT_COMMUNITY_SPRINT_2.md](docs/PROMPT_COMMUNITY_SPRINT_2.md)** - Implementation guide
-
-**Sprint 3: Discovery**
-- **[SPRINT_3_DISCOVERY.md](docs/SPRINT_3_DISCOVERY.md)** - Browse, search, and engagement features
-
-**Sprint 4: Notifications**
-- **[SPRINT_4_NOTIFICATIONS.md](docs/SPRINT_4_NOTIFICATIONS.md)** - Notification system and community features
-
-**Sprint 5: Professional Pipeline**
-- **[SPRINT_5_PROFESSIONAL_PIPELINE.md](docs/SPRINT_5_PROFESSIONAL_PIPELINE.md)** - Agent/editor features and Writers Factory integration
-
 ## Development Roadmap
 
-**Sprint 1: Foundation** (~8 hours)
+**Sprint 1: Foundation** ✅ COMPLETE (~8 hours)
 - User authentication (register/login with JWT)
 - Work upload functionality
 - Work display/reading interface
 - PostgreSQL database setup
 - Docker Compose for local development
 
-**Sprint 2: Read-to-Rate Mechanics** (~8 hours)
+**Sprint 2: Read-to-Rate Mechanics** 🔜 NEXT (~8 hours)
 - Section-based reading (chapters)
 - Read tracking (scroll depth, time on page)
 - Comment system (unlocks after reading)
@@ -96,9 +234,22 @@ All project documentation is in the `/docs` directory:
 - Analytics dashboard
 - Writers Factory integration
 
-## Getting Started
+## Troubleshooting
 
-See [PROMPT_COMMUNITY_SPRINT_1.md](docs/PROMPT_COMMUNITY_SPRINT_1.md) for detailed setup instructions.
+**Database Connection Error:**
+- Ensure Docker is running: `docker ps`
+- Check PostgreSQL is running: `docker-compose ps`
+- Restart if needed: `docker-compose restart`
+
+**Frontend Can't Reach Backend:**
+- Check backend is running on port 8000
+- Verify CORS settings in `backend/app/main.py`
+- Check for port conflicts
+
+**401 Unauthorized on Upload:**
+- Ensure you're logged in
+- Check token is stored in localStorage
+- Try logging out and back in
 
 ## Repository
 
@@ -114,7 +265,7 @@ Project Lead: [Your contact information]
 
 ---
 
-**Status:** All 5 sprints specified and ready for implementation
+**Status:** Sprint 1 Complete ✅
+**Next:** Sprint 2 - Read-to-Rate Mechanics
 **Timeline:** ~48 hours total (5 sprints)
 **Created:** November 16, 2025
-**Specifications Completed:** November 16, 2025
