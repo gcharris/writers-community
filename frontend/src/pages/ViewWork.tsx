@@ -27,7 +27,6 @@ interface Comment {
 
 export function ViewWork() {
   const { id } = useParams<{ id: string }>();
-  const navigate = useNavigate();
   const { isAuthenticated, logout } = useAuthStore();
   const [work, setWork] = useState<Work | null>(null);
   const [loading, setLoading] = useState(true);

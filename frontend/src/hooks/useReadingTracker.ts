@@ -17,7 +17,7 @@ export const useReadingTracker = (workId: string, sectionId?: string) => {
   });
 
   const startTimeRef = useRef<number>(Date.now());
-  const updateIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const updateIntervalRef = useRef<number | null>(null);
 
   // Start reading session
   useEffect(() => {

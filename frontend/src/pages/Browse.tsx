@@ -25,7 +25,6 @@ interface Genre {
 }
 
 export function Browse() {
-  const navigate = useNavigate();
   const { isAuthenticated, logout } = useAuthStore();
   const [works, setWorks] = useState<Work[]>([]);
   const [loading, setLoading] = useState(true);
