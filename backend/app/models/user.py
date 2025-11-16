@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, Text, DateTime
+from sqlalchemy import Column, String, Text, DateTime, Integer
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship
@@ -16,6 +16,16 @@ class User(Base):
     role = Column(String(20), default="writer")
     bio = Column(Text, nullable=True)
     avatar_url = Column(String(500), nullable=True)
+
+    # Sprint 3: Profile fields
+    location = Column(String(100), nullable=True)
+    website = Column(String(500), nullable=True)
+
+    # Sprint 3: Engagement stats
+    works_count = Column(Integer, default=0)
+    followers_count = Column(Integer, default=0)
+    following_count = Column(Integer, default=0)
+
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
 
@@ -24,3 +34,9 @@ class User(Base):
     reading_sessions = relationship("ReadingSession", back_populates="user")
     comments = relationship("Comment", back_populates="user")
     ratings = relationship("Rating", back_populates="user")
+
+    # Sprint 3: Discovery relationships
+    bookmarks = relationship("Bookmark", back_populates="user", cascade="all, delete-orphan")
+    reading_history = relationship("ReadingHistory", back_populates="user", cascade="all, delete-orphan")
+    following = relationship("Follow", foreign_keys="Follow.follower_id", back_populates="follower", cascade="all, delete-orphan")
+    followers = relationship("Follow", foreign_keys="Follow.following_id", back_populates="following", cascade="all, delete-orphan")
