@@ -1,6 +1,7 @@
 from sqlalchemy import Column, String, Text, DateTime
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.sql import func
+from sqlalchemy.orm import relationship
 import uuid
 
 from app.core.database import Base
@@ -17,3 +18,9 @@ class User(Base):
     avatar_url = Column(String(500), nullable=True)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
+
+    # Relationships
+    works = relationship("Work", back_populates="author")
+    reading_sessions = relationship("ReadingSession", back_populates="user")
+    comments = relationship("Comment", back_populates="user")
+    ratings = relationship("Rating", back_populates="user")

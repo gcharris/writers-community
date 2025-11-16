@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, Text, Integer, DateTime, ForeignKey
+from sqlalchemy import Column, String, Text, Integer, DateTime, ForeignKey, Float
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship
@@ -18,8 +18,18 @@ class Work(Base):
     word_count = Column(Integer)
     summary = Column(Text)
     status = Column(String(20), default="draft")
+
+    # Rating statistics
+    rating_average = Column(Float, default=0.0)
+    rating_count = Column(Integer, default=0)
+    comment_count = Column(Integer, default=0)
+
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
 
     # Relationships
-    author = relationship("User", backref="works")
+    author = relationship("User", back_populates="works")
+    sections = relationship("Section", back_populates="work", cascade="all, delete-orphan")
+    reading_sessions = relationship("ReadingSession", back_populates="work", cascade="all, delete-orphan")
+    comments = relationship("Comment", back_populates="work", cascade="all, delete-orphan")
+    ratings = relationship("Rating", back_populates="work", cascade="all, delete-orphan")

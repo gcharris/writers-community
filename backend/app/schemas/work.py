@@ -22,9 +22,13 @@ class WorkResponse(BaseModel):
     title: str
     genre: Optional[str]
     content_rating: str
+    content: str
     word_count: int
     summary: Optional[str]
     status: str
+    rating_average: float
+    rating_count: int
+    comment_count: int
     created_at: datetime
 
     class Config:

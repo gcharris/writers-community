@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.core.config import settings
 from app.core.database import Base, engine
-from app.routes import auth, works
+from app.routes import auth, works, reading, comments, ratings
 
 # Create database tables
 Base.metadata.create_all(bind=engine)
@@ -27,6 +27,9 @@ app.add_middleware(
 # Include routers
 app.include_router(auth.router, prefix=settings.API_PREFIX)
 app.include_router(works.router, prefix=settings.API_PREFIX)
+app.include_router(reading.router, prefix=settings.API_PREFIX)
+app.include_router(comments.router, prefix=settings.API_PREFIX)
+app.include_router(ratings.router, prefix=settings.API_PREFIX)
 
 @app.get("/")
 async def root():
