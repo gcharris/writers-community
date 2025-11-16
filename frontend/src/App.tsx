@@ -9,6 +9,9 @@ import { Profile } from './pages/Profile';
 import { Bookmarks } from './pages/Bookmarks';
 import { Dashboard } from './pages/Dashboard';
 import { Notifications } from './pages/Notifications';
+import { ProfessionalDiscover } from './pages/ProfessionalDiscover';
+import { ProfessionalInbox } from './pages/ProfessionalInbox';
+import { MySubmissions } from './pages/MySubmissions';
 
 const queryClient = new QueryClient();
 
@@ -27,6 +30,9 @@ function App() {
           <Route path="/bookmarks" element={<Bookmarks />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/notifications" element={<Notifications />} />
+          <Route path="/professional/discover" element={<ProfessionalDiscover />} />
+          <Route path="/professional/inbox" element={<ProfessionalInbox />} />
+          <Route path="/my-submissions" element={<MySubmissions />} />
         </Routes>
       </BrowserRouter>
     </QueryClientProvider>
