@@ -44,3 +44,6 @@ class User(Base):
     # Sprint 4: Notifications and community
     notifications = relationship("Notification", foreign_keys="Notification.user_id", back_populates="user", cascade="all, delete-orphan")
     reading_lists = relationship("ReadingList", back_populates="user", cascade="all, delete-orphan")
+
+    # Sprint 5: Professional accounts
+    professional_profile = relationship("ProfessionalProfile", back_populates="user", uselist=False, cascade="all, delete-orphan")
