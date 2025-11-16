@@ -39,10 +39,26 @@ Writers Community Platform empowers writers to upload, share, and receive feedba
 
 All project documentation is in the `/docs` directory:
 
+**Architecture:**
 - **[WRITERS_COMMUNITY_ARCHITECTURE.md](docs/WRITERS_COMMUNITY_ARCHITECTURE.md)** - Complete platform vision and architecture
-- **[SPRINT_1_COMMUNITY_FOUNDATION.md](docs/SPRINT_1_COMMUNITY_FOUNDATION.md)** - Detailed Sprint 1 specification with all code
+
+**Sprint 1: Foundation**
+- **[SPRINT_1_COMMUNITY_FOUNDATION.md](docs/SPRINT_1_COMMUNITY_FOUNDATION.md)** - Detailed specification with all code
 - **[PROMPT_COMMUNITY_SPRINT_1.md](docs/PROMPT_COMMUNITY_SPRINT_1.md)** - Step-by-step implementation guide
 - **[PROMPT_COMMUNITY_SPRINT_1_FINAL.md](docs/PROMPT_COMMUNITY_SPRINT_1_FINAL.md)** - Concise implementation prompt
+
+**Sprint 2: Read-to-Rate**
+- **[SPRINT_2_READ_TO_RATE.md](docs/SPRINT_2_READ_TO_RATE.md)** - Complete read-to-rate mechanics specification
+- **[PROMPT_COMMUNITY_SPRINT_2.md](docs/PROMPT_COMMUNITY_SPRINT_2.md)** - Implementation guide
+
+**Sprint 3: Discovery**
+- **[SPRINT_3_DISCOVERY.md](docs/SPRINT_3_DISCOVERY.md)** - Browse, search, and engagement features
+
+**Sprint 4: Notifications**
+- **[SPRINT_4_NOTIFICATIONS.md](docs/SPRINT_4_NOTIFICATIONS.md)** - Notification system and community features
+
+**Sprint 5: Professional Pipeline**
+- **[SPRINT_5_PROFESSIONAL_PIPELINE.md](docs/SPRINT_5_PROFESSIONAL_PIPELINE.md)** - Agent/editor features and Writers Factory integration
 
 ## Development Roadmap
 
@@ -98,6 +114,7 @@ Project Lead: [Your contact information]
 
 ---
 
-**Status:** Sprint 1 - Ready for implementation
+**Status:** All 5 sprints specified and ready for implementation
 **Timeline:** ~48 hours total (5 sprints)
 **Created:** November 16, 2025
+**Specifications Completed:** November 16, 2025
