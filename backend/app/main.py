@@ -18,7 +18,12 @@ app = FastAPI(
 # CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "https://writerscommunity.app", "https://www.writerscommunity.app"],
+    allow_origins=[
+        "http://localhost:5173",
+        "https://writerscommunity.app",
+        "https://www.writerscommunity.app",
+        "https://feisty-passion-production-a7f1.up.railway.app"
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
