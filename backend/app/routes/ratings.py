@@ -8,6 +8,7 @@ from app.models.rating import Rating
 from app.models.work import Work
 from app.routes.reading import check_can_rate
 from app.schemas.rating import RatingCreate, RatingUpdate, RatingResponse, WorkRatingStats
+from app.services.notifications import NotificationService
 from typing import List
 import uuid
 
@@ -55,6 +56,11 @@ async def create_rating(
 
     # Update work's rating stats
     update_work_rating_stats(work_id, db)
+
+    # Send notification to work author
+    work = db.query(Work).filter(Work.id == work_id).first()
+    if work:
+        NotificationService.create_rating_notification(db, work, current_user, data.score)
 
     db.refresh(rating)
     rating.username = current_user.username

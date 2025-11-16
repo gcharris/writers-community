@@ -7,6 +7,8 @@ import { ViewWork } from './pages/ViewWork';
 import { Browse } from './pages/Browse';
 import { Profile } from './pages/Profile';
 import { Bookmarks } from './pages/Bookmarks';
+import { Dashboard } from './pages/Dashboard';
+import { Notifications } from './pages/Notifications';
 
 const queryClient = new QueryClient();
 
@@ -23,6 +25,8 @@ function App() {
           <Route path="/profile/:username" element={<Profile />} />
           <Route path="/profile/me" element={<Profile />} />
           <Route path="/bookmarks" element={<Bookmarks />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/notifications" element={<Notifications />} />
         </Routes>
       </BrowserRouter>
     </QueryClientProvider>

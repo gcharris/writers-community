@@ -5,8 +5,10 @@ from app.core.database import get_db
 from app.routes.auth import get_current_user
 from app.models.user import User
 from app.models.comment import Comment
+from app.models.work import Work
 from app.models.reading_session import ReadingSession
 from app.schemas.comment import CommentCreate, CommentUpdate, CommentResponse
+from app.services.notifications import NotificationService
 from typing import List, Optional
 import uuid
 
@@ -56,6 +58,17 @@ async def create_comment(
 
     # Add username for response
     comment.username = current_user.username
+
+    # Send notifications
+    work = db.query(Work).filter(Work.id == work_id).first()
+    if work:
+        NotificationService.create_comment_notification(db, work, current_user, comment)
+
+        # If it's a reply, notify the parent comment author
+        if comment.parent_id:
+            parent = db.query(Comment).filter(Comment.id == comment.parent_id).first()
+            if parent:
+                NotificationService.create_reply_notification(db, parent, current_user, comment)
 
     return comment
 

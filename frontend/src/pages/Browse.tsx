@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { apiClient } from '../api/client';
 import { useAuthStore } from '../stores/authStore';
+import { NotificationBell } from '../components/NotificationBell';
 
 interface Work {
   id: string;
@@ -130,12 +131,14 @@ export function Browse() {
         <div className="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center">
             <h1 className="text-3xl font-bold text-gray-900">Writers Community</h1>
-            <nav className="space-x-4">
+            <nav className="flex items-center space-x-4">
               {isAuthenticated() ? (
                 <>
+                  <Link to="/dashboard" className="text-blue-600 hover:text-blue-700 font-medium">Dashboard</Link>
                   <Link to="/profile/me" className="text-blue-600 hover:text-blue-700 font-medium">Profile</Link>
                   <Link to="/bookmarks" className="text-blue-600 hover:text-blue-700 font-medium">Bookmarks</Link>
                   <Link to="/upload" className="text-blue-600 hover:text-blue-700 font-medium">Upload Work</Link>
+                  <NotificationBell />
                   <button onClick={logout} className="text-red-600 hover:text-red-700 font-medium">Logout</button>
                 </>
               ) : (
