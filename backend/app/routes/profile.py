@@ -10,6 +10,7 @@ from app.schemas.profile import (
     ProfileUpdate, ProfileResponse, UserWorkSummary,
     UserWorksResponse, FollowResponse, FollowersResponse
 )
+from app.services.notifications import NotificationService
 from typing import Optional
 import uuid
 
@@ -202,6 +203,9 @@ async def follow_user(
 
     db.commit()
     db.refresh(follow)
+
+    # Send follow notification
+    NotificationService.create_follow_notification(db, current_user, user_to_follow)
 
     return FollowResponse(
         id=follow.id,

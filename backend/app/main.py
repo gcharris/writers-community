@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.core.config import settings
 from app.core.database import Base, engine
-from app.routes import auth, works, reading, comments, ratings, browse, profile, engagement
+from app.routes import auth, works, reading, comments, ratings, browse, profile, engagement, notifications, dashboard, reading_lists
 
 # Create database tables
 Base.metadata.create_all(bind=engine)
@@ -34,6 +34,10 @@ app.include_router(ratings.router, prefix=settings.API_PREFIX)
 app.include_router(browse.router, prefix=settings.API_PREFIX)
 app.include_router(profile.router, prefix=settings.API_PREFIX)
 app.include_router(engagement.router, prefix=settings.API_PREFIX)
+# Sprint 4: Notifications and community
+app.include_router(notifications.router, prefix=settings.API_PREFIX)
+app.include_router(dashboard.router, prefix=settings.API_PREFIX)
+app.include_router(reading_lists.router, prefix=settings.API_PREFIX)
 
 @app.get("/")
 async def root():
