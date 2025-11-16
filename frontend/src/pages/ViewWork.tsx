@@ -39,6 +39,7 @@ export function ViewWork() {
   const [validationMessage, setValidationMessage] = useState('');
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState('');
+  const [isBookmarked, setIsBookmarked] = useState(false);
 
   const { metrics, completeSession } = useReadingTracker(id!);
 
@@ -82,8 +83,18 @@ export function ViewWork() {
       }
     };
 
+    const checkBookmark = async () => {
+      try {
+        const response = await apiClient.get(`/engagement/bookmarks/check/${id}`);
+        setIsBookmarked(response.data.is_bookmarked);
+      } catch (err) {
+        console.error('Failed to check bookmark:', err);
+      }
+    };
+
     fetchComments();
     checkValidation();
+    checkBookmark();
   }, [id, isAuthenticated]);
 
   const handleCompleteReading = async () => {
@@ -133,6 +144,22 @@ export function ViewWork() {
     }
   };
 
+  const handleToggleBookmark = async () => {
+    try {
+      if (isBookmarked) {
+        await apiClient.delete(`/engagement/bookmarks/${id}`);
+        setIsBookmarked(false);
+        alert('Bookmark removed');
+      } else {
+        await apiClient.post(`/engagement/bookmarks/${id}`);
+        setIsBookmarked(true);
+        alert('Work bookmarked!');
+      }
+    } catch (err: any) {
+      alert(err.response?.data?.detail || 'Failed to update bookmark');
+    }
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -174,7 +201,19 @@ export function ViewWork() {
       <div className="max-w-4xl mx-auto p-4 pt-20">
         <div className="flex justify-between items-center mb-6">
           <Link to="/" className="text-blue-600 hover:text-blue-700">&larr; Back to Browse</Link>
-          <div className="space-x-4">
+          <div className="flex items-center gap-4">
+            {isAuthenticated() && (
+              <button
+                onClick={handleToggleBookmark}
+                className={`px-4 py-2 rounded-lg font-medium ${
+                  isBookmarked
+                    ? 'bg-yellow-500 text-white hover:bg-yellow-600'
+                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                }`}
+              >
+                {isBookmarked ? '🔖 Bookmarked' : '🔖 Bookmark'}
+              </button>
+            )}
             {isAuthenticated() ? (
               <>
                 <Link to="/upload" className="text-blue-600 hover:text-blue-700">Upload Work</Link>

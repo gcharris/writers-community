@@ -5,6 +5,8 @@ import { Login } from './pages/Login';
 import { UploadWork } from './pages/UploadWork';
 import { ViewWork } from './pages/ViewWork';
 import { Browse } from './pages/Browse';
+import { Profile } from './pages/Profile';
+import { Bookmarks } from './pages/Bookmarks';
 
 const queryClient = new QueryClient();
 
@@ -18,6 +20,9 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/upload" element={<UploadWork />} />
           <Route path="/works/:id" element={<ViewWork />} />
+          <Route path="/profile/:username" element={<Profile />} />
+          <Route path="/profile/me" element={<Profile />} />
+          <Route path="/bookmarks" element={<Bookmarks />} />
         </Routes>
       </BrowserRouter>
     </QueryClientProvider>
